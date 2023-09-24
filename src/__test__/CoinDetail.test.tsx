@@ -25,6 +25,7 @@ describe('CoinDetails Component', () => {
             market_data: {
                 current_price: { usd: 50000 },
                 market_cap: { usd: 1000000000 },
+                fully_diluted_valuation: { usd: 1000000000000 }
             },
         };
 
