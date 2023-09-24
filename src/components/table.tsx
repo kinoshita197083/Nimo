@@ -17,7 +17,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-import { HeadCell, tableHeadCells } from '../data/headCells';
+import { HeadCell } from '../data/headCells';
 import { useNavigate } from 'react-router-dom';
 import { CoinMarket } from '../types/coinMarket';
 
@@ -131,7 +131,7 @@ export default function EnhancedTable(props: EnhancedTableProps) {
     const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
     const handleRequestSort = (
-        event: React.MouseEvent<unknown>,
+        _: React.MouseEvent<unknown>,
         property: keyof CoinMarket,
     ) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -139,7 +139,7 @@ export default function EnhancedTable(props: EnhancedTableProps) {
         setOrderBy(property);
     };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleChangePage = (_: unknown, newPage: number) => {
         setPage(newPage);
     };
 

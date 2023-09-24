@@ -1,6 +1,7 @@
 /**
  * Define what the attributes the table head should have
  */
+
 import { CoinMarket } from "../types/coinMarket";
 
 
