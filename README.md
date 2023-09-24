@@ -1,27 +1,29 @@
-# React + TypeScript + Vite
+# Nimo
+Online Test for Frontend Developer Position
 
+# Task
+- Use React.js to present the market data of cryptocurrencies into a table
+- Use MUI components to style the application and table components
+- UI: responsive, error handling, loading indicators, sorting
+- Detail Page for each currency
+- Unit test with Jest
+- Setup CI/CD with Github workflow & Vercel
+- https://www.coingecko.com/ for reference
+
+# Deployment with Vercel
+https://nimo-2fix-kinoshita197083.vercel.app/
+
+# React + TypeScript + Vite + Jest + ReactQuery
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
+# Getting Started
+Run the following command to install all the necessary packages
 
 ```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+cd Nimo
+npm i
+npm run dev 
+``` 
+press command + click http://127.0.0.1:5173/ to start the dev server
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
