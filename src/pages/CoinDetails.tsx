@@ -25,7 +25,7 @@ const CoinDetails = () => {
                     <Link
                         style={{ color: 'white' }}
                     >
-                        {name}
+                        Coin Detail
                     </Link>
                 </Breadcrumbs>
 

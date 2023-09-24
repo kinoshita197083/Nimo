@@ -11,12 +11,12 @@ describe('Test All axios fetches', () => {
     });
 
     it('should fetch coins data by page correctly', async () => {
-        const pageParam = 1;
+        let pageParam = 1;
         const dataPerPage = 10;
 
         const mockResponseData = dummy;
 
-        mock.onGet(`/markets?vs_currency=usd&order=market_cap_desc&per_page=${dataPerPage}&page=${pageParam}&precision=2`).reply(200, mockResponseData);
+        mock.onGet(`/markets?vs_currency=usd&order=market_cap_rank_desc&per_page=${dataPerPage}&page=${pageParam}&precision=2`).reply(200, mockResponseData);
 
         const result = await getCoinsByPage(pageParam, dataPerPage);
 
@@ -24,10 +24,10 @@ describe('Test All axios fetches', () => {
     });
 
     it('getCoinsByPage - should handle network errors', async () => {
-        const pageParam = 1;
+        let pageParam = 1;
         const dataPerPage = 10;
 
-        mock.onGet(`/markets?vs_currency=usd&order=market_cap_desc&per_page=${dataPerPage}&page=${pageParam}&precision=2`).networkError();
+        mock.onGet(`/markets?vs_currency=usd&order=market_cap_rank_desc&per_page=${dataPerPage}&page=${pageParam}&precision=2`).networkError();
 
         try {
             await getCoinsByPage(pageParam, dataPerPage);
