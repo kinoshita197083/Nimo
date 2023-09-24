@@ -1,4 +1,4 @@
-import { CoinMarket } from "../types/coinMarket";
+import { CoinMarket } from "../types/CoinMarket";
 
 export const dummy: CoinMarket[] = [{
     ath: 69045,

@@ -19,7 +19,7 @@ import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import { HeadCell } from '../data/headCells';
 import { useNavigate } from 'react-router-dom';
-import { CoinMarket } from '../types/coinMarket';
+import { CoinMarket } from '../types/CoinMarket';
 
 
 type Order = 'asc' | 'desc';
