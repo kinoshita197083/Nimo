@@ -10,7 +10,7 @@ import useAllCoinData from '../hooks/useAllCoinData';
 
 const Home = () => {
 
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage] = useState(0);
     const limit = 50; // Data per page
 
     // React Query for caching, auto-retry, error handling & loading state handling
