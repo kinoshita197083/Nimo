@@ -5,7 +5,10 @@ const useMarketData = (currentPage: number, limit: number) => {
 
     return useQuery(
         [currentPage], () => getCoinsByPage(currentPage, limit),
-        { keepPreviousData: true },
+        {
+            keepPreviousData: true,
+            refetchOnWindowFocus: false,
+        },
     );
 }
 

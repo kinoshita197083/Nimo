@@ -5,7 +5,10 @@ const useAllCoinData = () => {
 
     return useQuery(
         ['all_coins'], () => getAllCoins,
-        { keepPreviousData: true },
+        {
+            keepPreviousData: true,
+            refetchOnWindowFocus: false,
+        },
     );
 }
 
