@@ -43,8 +43,6 @@ const Home = () => {
                             data={cryptos}
                             // data={dummy}
                             headCells={tableHeadCells}
-                            page={currentPage}
-                            setPage={setCurrentPage}
                         /> :
                         <Skeleton displayText='Skeleton' />
                 }

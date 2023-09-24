@@ -5,6 +5,8 @@
 
 import { useLoaderData } from 'react-router-dom'
 import { getCoinDetail } from '../api/axios';
+import { Breadcrumbs } from '@mui/material';
+import Link from '@mui/material/Link';
 
 const CoinDetails = () => {
 
@@ -13,8 +15,21 @@ const CoinDetails = () => {
 
     return (
         <div>
+
             <div className='flex flex-col min-h-screen min-w-screen px-[8%] py-[2%]'>
-                <div className='bg-black mb-[5%]'>
+
+                <Breadcrumbs aria-label="breadcrumb" style={{ color: 'gray', fontSize: '1.5rem', marginBlock: '3%' }}>
+                    <Link underline="hover" color="inherit" href="/" style={{ color: 'white' }}>
+                        Market
+                    </Link>
+                    <Link
+                        style={{ color: 'white' }}
+                    >
+                        {name}
+                    </Link>
+                </Breadcrumbs>
+
+                <div className='mb-[5%]'>
                     <span className='bg-indigo-800 text-gray-100 w-[5rem] flex justify-center rounded my-[1%]'>Rank #{market_cap_rank}</span>
                     <div className='flex gap-[1%] items-center'>
                         <img className='w-[35px]' src={image.small} />

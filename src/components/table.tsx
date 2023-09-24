@@ -68,8 +68,6 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 interface EnhancedTableProps {
     data: CoinMarket[];
     headCells: readonly HeadCell[];
-    page: number;
-    setPage: React.Dispatch<React.SetStateAction<number>>
 }
 
 interface EnhancedTableHeadProps {
@@ -119,7 +117,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
 
 export default function EnhancedTable(props: EnhancedTableProps) {
 
-    const { data, headCells, page, setPage } = props;
+    const { data, headCells } = props;
 
     const rows: CoinMarket[] = data.map(data => data);
 
@@ -128,6 +126,7 @@ export default function EnhancedTable(props: EnhancedTableProps) {
 
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof CoinMarket>('name');
+    const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
     const handleRequestSort = (

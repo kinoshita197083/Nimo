@@ -7,7 +7,7 @@ export const axiosInstance = axios.create({
 
 export const getCoinsByPage = async (pageParam: number, dataPerPage: number) => {
 
-    const response = await axiosInstance.get(`/markets?vs_currency=usd&order=market_cap_desc&per_page=${dataPerPage}&page=${pageParam++}&precision=2`);
+    const response = await axiosInstance.get(`/markets?vs_currency=usd&order=market_cap_rank_desc&per_page=${dataPerPage}&page=${pageParam++}&precision=2`);
 
     console.log(response);
     return response.data;
