@@ -7,6 +7,7 @@ import CustomSnackbar from '../components/snackbar';
 import Skeleton from '../components/skeleton';
 import useMarketData from '../hooks/useMarketData';
 import useAllCoinData from '../hooks/useAllCoinData';
+import PageLayout from '../components/pageLayout';
 
 const Home = () => {
 
@@ -25,7 +26,7 @@ const Home = () => {
     let errorMessage = (error as Error)?.message || 'Error';
 
     return (
-        <main className='min-h-screen min-w-screen flex flex-col justify-center items-center px-[8%] py-[2%]'>
+        <PageLayout>
             <header className="w-full">
                 <h1 className="text-[2.5rem]">Market Data of Cryptocurrencies</h1>
                 <h3 className="text-[1.2rem] text-gray-400">The global cryptocurrency market cap today</h3>
@@ -36,7 +37,7 @@ const Home = () => {
                     message={errorMessage === 'Network Error' ? 'API Limit Exceeded' : errorMessage}
                 />}
 
-            <div className='w-full my-[5%]'>
+            <section className='w-full my-[5%]'>
                 {
                     cryptos ?
                         <EnhancedTable
@@ -46,11 +47,11 @@ const Home = () => {
                         /> :
                         <Skeleton displayText='Skeleton' />
                 }
-            </div>
+            </section>
 
             {isLoading && <Loading />}
 
-        </main>
+        </PageLayout>
     )
 }
 

@@ -3,13 +3,14 @@ import { getAllCoins } from '../api/axios';
 
 const useAllCoinData = () => {
 
-    return useQuery(
-        ['all_coins'], () => getAllCoins,
-        {
-            keepPreviousData: true,
-            refetchOnWindowFocus: false,
-        },
-    );
+    return useQuery({
+        queryKey: ['all_coins'],
+        queryFn: () => getAllCoins,
+        keepPreviousData: true,
+        refetchOnWindowFocus: false,
+        // staleTime: 1000 * 60 * 15
+        // refetchInterval: 1000
+    });
 }
 
 export default useAllCoinData

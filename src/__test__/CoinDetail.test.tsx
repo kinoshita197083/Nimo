@@ -1,3 +1,6 @@
+/**
+ * I used ChatGPT helping me to write the skeleton of the test cases
+ */
 import { render, screen } from '@testing-library/react';
 import { useLoaderData } from 'react-router-dom';
 import CoinDetails from '../pages/CoinDetails';
@@ -25,6 +28,7 @@ describe('CoinDetails Component', () => {
             market_data: {
                 current_price: { usd: 50000 },
                 market_cap: { usd: 1000000000 },
+                fully_diluted_valuation: { usd: 1000000000000 }
             },
         };
 

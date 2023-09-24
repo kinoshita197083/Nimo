@@ -1,9 +1,10 @@
 import axios from "axios"
 
+// https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_rank_desc&per_page=100&page=1&precision=2
+
 export const axiosInstance = axios.create({
     baseURL: `https://api.coingecko.com/api/v3/coins`
 })
-
 
 export const getCoinsByPage = async (pageParam: number, dataPerPage: number) => {
 
