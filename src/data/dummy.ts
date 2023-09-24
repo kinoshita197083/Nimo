@@ -1,4 +1,6 @@
-export const dummy = [{
+import { CoinMarket } from "../types/coinMarket";
+
+export const dummy: CoinMarket[] = [{
     ath: 69045,
     ath_change_percentage: -61.48158,
     ath_date: "2021-11-10T14:24:11.849Z",

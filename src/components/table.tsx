@@ -1,3 +1,10 @@
+/*
+ * The Code is copied from MUI Doc
+ * Most of the unnecessary parts have been removed
+ * It's not a re-useable component due to the design of the table
+ * Explanation: (Logo, Name, Ticker) have to group into one section to fit into one Column
+ */
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -10,16 +17,15 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
+import { HeadCell, tableHeadCells } from '../data/headCells';
+import { useNavigate } from 'react-router-dom';
+import { CoinMarket } from '../types/coinMarket';
 
-import { dummy } from '../data/dummy';
-import { tableHeadCells } from '../data/headCells';
 
-
-export type CoinType = typeof dummy[0];
 type Order = 'asc' | 'desc';
 
-const headCells = tableHeadCells;
-const rows = dummy.map(data => data);
+// const headCells = tableHeadCells;
+// const rows = dummy.map(data => data);
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -60,31 +66,35 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 }
 
 interface EnhancedTableProps {
-    coins: CoinType[]
+    data: CoinMarket[];
+    headCells: readonly HeadCell[];
+    page: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>
 }
 
 interface EnhancedTableHeadProps {
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof CoinType) => void;
+    headCells: any
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof CoinMarket) => void;
     order: Order;
     orderBy: string;
+    rowCount: number
 }
 
 function EnhancedTableHead(props: EnhancedTableHeadProps) {
-    const { order, orderBy, onRequestSort } =
+    const { headCells, order, orderBy, onRequestSort } =
         props;
     const createSortHandler =
-        (property: keyof CoinType) => (event: React.MouseEvent<unknown>) => {
+        (property: keyof CoinMarket) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
 
     return (
         <TableHead className='m-auto'>
             <TableRow>
-                {headCells.map((headCell) => (
+                {headCells.map((headCell: HeadCell) => (
                     <TableCell
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -106,20 +116,23 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
     );
 }
 
+
 export default function EnhancedTable(props: EnhancedTableProps) {
 
-    const { coins } = props;
+    const { data, headCells, page, setPage } = props;
 
-    const rows = coins.map(data => data);
+    const rows: CoinMarket[] = data.map(data => data);
+
+    // act like <Link> that bring user to /${id}
+    const navigate = useNavigate();
 
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof CoinType>('name');
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [orderBy, setOrderBy] = React.useState<keyof CoinMarket>('name');
+    const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
-        property: keyof CoinType,
+        property: keyof CoinMarket,
     ) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -141,12 +154,18 @@ export default function EnhancedTable(props: EnhancedTableProps) {
 
     const visibleRows = React.useMemo(
         () =>
-            stableSort(rows, getComparator(order, orderBy)).slice(
+            stableSort(rows as any, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
         [order, orderBy, page, rowsPerPage],
     );
+
+    const handleClick = (id: string) => {
+        navigate(`/coins/${id}`)
+    }
+
+
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -157,19 +176,20 @@ export default function EnhancedTable(props: EnhancedTableProps) {
                         aria-labelledby="tableTitle"
                     >
                         <EnhancedTableHead
+                            headCells={headCells}
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
                         <TableBody>
-                            {visibleRows.map((row, index) => {
+                            {visibleRows.map((row, _) => {
                                 const { id, name, symbol, current_price, image, price_change_percentage_24h, market_cap, market_cap_rank, total_volume } = row;
 
                                 return (
                                     <TableRow
                                         hover
-                                        // onClick={(event) => handleClick(event, row.name)}
+                                        onClick={() => handleClick(id.toString())}
                                         tabIndex={-1}
                                         key={id}
                                         sx={{ cursor: 'pointer' }}
