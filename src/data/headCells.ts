@@ -13,6 +13,11 @@ export interface HeadCell {
 
 export const tableHeadCells: readonly HeadCell[] = [
     {
+        id: 'pin',
+        numeric: false,
+        label: 'Action'
+    },
+    {
         id: 'market_cap_rank',
         numeric: false,
         label: 'Rank',

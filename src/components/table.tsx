@@ -117,7 +117,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
 
 export default function EnhancedTable(props: EnhancedTableProps) {
 
-    const { data, headCells } = props;
+    const { data, headCells, setPin, pins } = props;
 
     const rows: CoinMarket[] = data.map(data => data);
 
@@ -164,7 +164,26 @@ export default function EnhancedTable(props: EnhancedTableProps) {
         navigate(`/coins/${id}`)
     }
 
+    const togglePin = (e, symbol, price_change_percentage_24h, image, setPin, pins) => {
+        e.stopPropagation();
+        console.log('test')
+        const temp = {
+            price_change_percentage_24h,
+            symbol,
+            image,
+        };
 
+        console.log(`Temp Object:`, temp)
+        // setPin([...pins, temp]);
+        pins.forEach(pin => (
+            pin.symbol
+        ))
+        if (pins.includes(temp.symbol)) {
+            const clone = [...pins];
+            const filtered = clone.filter(item => item.symbol !== temp.symbol);
+            setPin(filtered);
+        }
+    }
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -193,6 +212,8 @@ export default function EnhancedTable(props: EnhancedTableProps) {
                                         key={id}
                                         sx={{ cursor: 'pointer' }}
                                     >
+                                        <TableCell align="center" padding='checkbox' onClick={(e) => togglePin(e, symbol, price_change_percentage_24h, image, setPin, pins)}
+                                        >Set pin</TableCell>
                                         <TableCell align="center" padding='checkbox'>{market_cap_rank}</TableCell>
                                         <TableCell align="center">
                                             <div className='flex justify-left items-center gap-[3%]'>
