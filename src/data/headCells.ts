@@ -5,8 +5,8 @@
 import { CoinMarket } from "../types/CoinMarket";
 
 
-export interface HeadCell {
-    id: keyof CoinMarket;
+export type HeadCell = {
+    id: keyof CoinMarket | 'pin';
     label: string;
     numeric: boolean;
 }

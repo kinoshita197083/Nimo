@@ -20,6 +20,8 @@ import { visuallyHidden } from '@mui/utils';
 import { HeadCell } from '../data/headCells';
 import { useNavigate } from 'react-router-dom';
 import { CoinMarket } from '../types/CoinMarket';
+import PushPinIcon from '@mui/icons-material/PushPin';
+
 
 
 type Order = 'asc' | 'desc';
@@ -68,6 +70,8 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 interface EnhancedTableProps {
     data: CoinMarket[];
     headCells: readonly HeadCell[];
+    pins: Pin[];
+    setPin: React.Dispatch<React.SetStateAction<Pin[]>>
 }
 
 interface EnhancedTableHeadProps {
@@ -82,7 +86,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
     const { headCells, order, orderBy, onRequestSort } =
         props;
     const createSortHandler =
-        (property: keyof CoinMarket) => (event: React.MouseEvent<unknown>) => {
+        (property: keyof CoinMarket | 'pin') => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
 
@@ -164,24 +168,28 @@ export default function EnhancedTable(props: EnhancedTableProps) {
         navigate(`/coins/${id}`)
     }
 
-    const togglePin = (e, symbol, price_change_percentage_24h, image, setPin, pins) => {
+    const togglePin = (e: MouseEvent, symbol: string, price_change_percentage_24h: string, image: string, setPin: React.Dispatch<React.SetStateAction<Pin[]>>, pins: Pin[]) => {
+
+        let existed = false;
+
         e.stopPropagation();
         console.log('test')
-        const temp = {
+        const temp: Pin = {
             price_change_percentage_24h,
             symbol,
             image,
         };
 
-        console.log(`Temp Object:`, temp)
-        // setPin([...pins, temp]);
-        pins.forEach(pin => (
-            pin.symbol
-        ))
-        if (pins.includes(temp.symbol)) {
-            const clone = [...pins];
-            const filtered = clone.filter(item => item.symbol !== temp.symbol);
-            setPin(filtered);
+        pins.forEach((pin: Pin) => {
+            if (pin.symbol === temp.symbol) existed = true;
+        })
+
+        if (!existed) setPin([...pins, temp]);
+        if (existed) {
+            const filtered = pins.filter((pin: Pin) => (
+                pin.symbol !== temp.symbol
+            ))
+            setPin(filtered)
         }
     }
 
@@ -213,7 +221,9 @@ export default function EnhancedTable(props: EnhancedTableProps) {
                                         sx={{ cursor: 'pointer' }}
                                     >
                                         <TableCell align="center" padding='checkbox' onClick={(e) => togglePin(e, symbol, price_change_percentage_24h, image, setPin, pins)}
-                                        >Set pin</TableCell>
+                                        >
+                                            <PushPinIcon />
+                                        </TableCell>
                                         <TableCell align="center" padding='checkbox'>{market_cap_rank}</TableCell>
                                         <TableCell align="center">
                                             <div className='flex justify-left items-center gap-[3%]'>

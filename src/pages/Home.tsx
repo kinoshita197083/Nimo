@@ -8,16 +8,11 @@ import Skeleton from '../components/skeleton';
 import useMarketData from '../hooks/useMarketData';
 import useAllCoinData from '../hooks/useAllCoinData';
 import PageLayout from '../components/pageLayout';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const Home = () => {
 
-    // const temp = {
-    //     price_change_percentage_24h: '25%',
-    //     symbol: 'Bit',
-    //     image: './shiba.png',
-    // };
-
-    const [pins, setPins] = useState([]);
+    const [pins, setPins] = useState<Pin[]>([]);
 
     const currentPage = 0;
     const limit = 50; // Data per page
@@ -33,6 +28,15 @@ const Home = () => {
 
     let errorMessage = (error as Error)?.message || 'Error';
 
+    const handleClick = (symbol: string) => {
+        const clone = [...pins];
+        const filtered = clone.filter(pin => (
+            pin.symbol !== symbol
+        ))
+
+        setPins(filtered);
+    }
+
     return (
         <PageLayout>
             <header className="w-full">
@@ -40,15 +44,16 @@ const Home = () => {
                 <h3 className="text-[1.2rem] text-gray-400">The global cryptocurrency market cap today</h3>
             </header>
 
-            <section className='flex gap-3 my-[5%]'>
+            <section className='flex mt-[3%] overflow-auto h-[5rem]'>
                 {pins.map((pin, index) => (
                     <div
-                        className='bg-gray-300 rounded h-[4rem] w-[12rem] flex gap-5 items-center justify-center'
+                        className='bg-gray-300 rounded h-[4rem] px-[1%] flex gap-5 items-center justify-center shadow-md mx-[1%]'
                         key={index}
                     >
                         <img src={pin.image} width='35px' height='35px' />
                         <h3 className='text-black text-[1rem]'>{pin.symbol}</h3>
                         <h3 className='text-black'>{pin.price_change_percentage_24h}</h3>
+                        <CancelIcon onClick={() => handleClick(pin.symbol)} style={{ cursor: 'pointer' }} />
                     </div>
                 ))}
             </section>
